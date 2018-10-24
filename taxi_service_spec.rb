@@ -32,30 +32,30 @@
  
  describe "Taxi" do
     before do
-        @taxi = Taxi.new
+        @taxi = Taxi.new("James Kirk", 1, "Chevrolet", "Corvette", "CPT LOG")
     end
     it "has a class called Taxi that is error free" do
-        expect{Taxi.new}.to_not raise_error
+        expect{Taxi.new("James Kirk", 1, "Chevrolet", "Corvette", "CPT LOG")}.to_not raise_error
     end
 
     it "has a Driver" do
-        expect(@taxi.driver).to eq "Joe Smith"
+        expect(@taxi.driver).to be_a String
     end
 
     it "has a number of seats" do
-        expect(@taxi.seats).to eq 2
+        expect(@taxi.seats).to be_a Numeric
     end
 
     it "has a taxi make" do
-        expect(@taxi.make).to eq "Ford"
+        expect(@taxi.make).to be_a String
     end
 
     it "has a taxi model" do
-        expect(@taxi.model).to eq "Crown Victoria"
+        expect(@taxi.model).to be_a String
     end
 
     it "has a license plate" do
-        expect(@taxi.lic_plate).to eq "7AFK237"
+        expect(@taxi.lic_plate).to be_a String
     end
 
     it "has a list of riders" do
@@ -64,13 +64,14 @@
 
     it "can pick up riders and add their name to the riders' list" do
         @taxi.pickup
-        expect(@taxi.rider_list).to end_with "John Smith"
+        expect(@taxi.rider_list.length).to be 1
     end
  end
 
  describe "TaxiService" do
     before do
         @taxi_service = TaxiService.new
+        @taxi8 = Taxi.new("Judge Dredd", 2, "The Company", "That Bike Thing", "DREDD")
     end
 
     it "has a class called TaxiService that is error free" do
@@ -91,8 +92,13 @@
     end
 
     it "can add a taxi to taxiQueue" do
-        taxi0 = Taxi.new
-        @taxi_service.addTaxi(taxi0)
+        @taxi_service.addTaxi(@taxi8)
         expect(@taxi_service.taxiQueue.length).to eq 1
+    end
+
+    it "assigns a rider from the top of the riderQueue to the taxi at the top of the taxiQueue" do
+        seats = @taxi8.seats
+       @taxi_service.assignRider
+       expect(@taxi8.seats).to eq seats
     end
  end
