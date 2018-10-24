@@ -29,7 +29,7 @@
 
  require 'rspec'
  require_relative 'taxi_service'
- 
+
  describe "Taxi" do
     before do
         @taxi = Taxi.new("James Kirk", 1, "Chevrolet", "Corvette", "CPT LOG")
@@ -97,8 +97,7 @@
     end
 
     it "assigns a rider from the top of the riderQueue to the taxi at the top of the taxiQueue" do
-        seats = @taxi8.seats
        @taxi_service.assignRider
-       expect(@taxi8.seats).to eq seats
+       expect(@taxi8.seats).to eq 1
     end
  end
